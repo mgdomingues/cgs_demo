@@ -1,10 +1,10 @@
 {
     "variables": {
       "digitalocean_api_token":"{{ env `DIGITAL_OCEAN_API_TOKEN` }}",
-      "droplet_name":"{{ env `DROPLET_NAME` }}",
+      "droplet_name":"{{ env `DROPLET_TEMPLATE_NAME` }}",
       "droplet_region":"{{ env `DROPLET_REGION` }}",
       "droplet_size":"{{ env `DROPLET_SIZE` }}",
-      "droplet_image": "ubuntu-16-04-x64"
+      "droplet_image": "ubuntu-20-04-x64"
     },
     "builders": [
       {
@@ -20,7 +20,15 @@
     "provisioners": [
       {
         "type": "shell",
-        "script": "scripts/ansible.sh"
+        "inline": [
+          "sleep 20",
+          "apt -y update",
+          "echo apt-get -y upgrade",
+          "echo apt -y install software-properties-common",
+          "apt-add-repository ppa:ansible/ansible",
+          "apt -y update",
+          "apt -y install ansible"
+        ]
       },
       {
         "type": "ansible-local",

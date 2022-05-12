@@ -15,6 +15,11 @@ terraform-apply:
 	terraform apply && \
 	cd -
 
+terraform-destroy:
+	cd terraform && \
+	terraform destroy && \
+	cd -
+
 packer-build:
 	cd packer && \
 	packer build template.json && \
