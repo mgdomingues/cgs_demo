@@ -1,0 +1,17 @@
+---
+- name: Clone growlerfriday
+  git:
+    repo: https://github.com/mgdomingues/cgs_demo_page.git
+    dest: /var/www/html/cgs-demo
+
+- name: Copy cgs-demo nginx configuration to sites-available
+  template:
+    src: templates/cgs-demo.conf.j2
+    dest: /etc/nginx/sites-available/cgs-demo.conf
+
+- name: Create sites-enabled symlink for nginx cgs-demo port 80 configuration
+  file:
+    src: /etc/nginx/sites-available/cgs-demo.conf
+    dest: /etc/nginx/sites-enabled/cgs-demo.conf
+    state: link
+  notify: restart nginx
